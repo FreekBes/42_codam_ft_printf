@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:44:06 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/25 19:11:05 by fbes          ########   odam.nl         */
+/*   Updated: 2020/11/25 19:55:12 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,21 @@
 # include <stdarg.h>
 
 # define VALID_CONVERSIONS "cspdiuxX%"
+# define VALID_FIELDS "-1234567890.*"
 
-enum	conversion_type{c_undefined = 0, c_c = 'c', c_s = 's', c_p = 'p', c_d = 'd', c_i = 'i', c_u = 'u', c_x = 'x', c_X = 'X', c_perc = '%'};
-
-typedef struct				s_conversion
+typedef struct		s_conversion
 {
 	const char				*position;
+	const char				*end;
 	void					*input;
 	char					*output;
-	int						field_width;
-	enum conversion_type	type;
+	int						width;
+	int						precision;
+	char					type;
 	struct s_conversion		*next;
-}							t_conversion;
+}					t_conversion;
 
 t_list		*parse_conversions(const char *s);
-int			ft_printf(const char *, ...);
+int			ft_printf(const char *n, ...);
 
 #endif

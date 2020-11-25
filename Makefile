@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/25 17:36:28 by fbes          #+#    #+#                  #
-#    Updated: 2020/11/25 19:09:52 by fbes          ########   odam.nl          #
+#    Updated: 2020/11/25 19:30:49 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ re: fclean all
 
 test: $(NAME)
 	gcc -fsanitize=address main.c libft/libft.a libftprintf.a
+	clear
 	./a.out
 	rm -f a.out
 
