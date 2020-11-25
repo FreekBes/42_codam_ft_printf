@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 18:38:35 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/25 21:17:49 by fbes          ########   odam.nl         */
+/*   Updated: 2020/11/25 21:34:09 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static int		parse_conv_complex(t_list **convs, const char **s)
 t_list			*parse_convs(const char *s)
 {
 	t_list		*convs;
+	t_conv		*last;
 
 	convs = NULL;
 	while (*s)
@@ -94,5 +95,7 @@ t_list			*parse_convs(const char *s)
 		}
 		s++;
 	}
+	last = new_conv(s, '\0', 0);
+	ft_lstadd_back(&convs, ft_lstnew(last));
 	return (convs);
 }
