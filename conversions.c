@@ -6,17 +6,17 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 18:38:35 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/25 20:43:34 by fbes          ########   odam.nl         */
+/*   Updated: 2020/11/25 20:51:53 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static t_conversion	*new_conversion(const char *pos, char c, int format_size)
+static t_conv	*new_conv(const char *pos, char c, int format_size)
 {
-	t_conversion	*conv;
+	t_conv		*conv;
 
-	conv = malloc(sizeof(t_conversion));
+	conv = malloc(sizeof(t_conv));
 	if (conv)
 	{
 		conv->position = pos;
@@ -28,31 +28,31 @@ static t_conversion	*new_conversion(const char *pos, char c, int format_size)
 	return (conv);
 }
 
-static void			del_conversion(void *conv)
+static void			del_conv(void *conv)
 {
 	free(conv);
 }
 
-int					parse_conversion_simple(t_list **conversions, const char **s)
+static int			parse_conv_simple(t_list **convs, const char **s)
 {
-	t_conversion	*temp;
+	t_conv		*temp;
 
 	temp = new_conversion(*s, *((*s) + 1), 2);
 	if (temp)
-		ft_lstadd_back(conversions, ft_lstnew(temp));
+		ft_lstadd_back(convs, ft_lstnew(temp));
 	else
 	{
-		ft_lstclear(conversions, &del_conversion);
+		ft_lstclear(convs, &del_conv);
 		return (0);
 	}
 	(*s)++;
 	return (1);
 }
 
-int					parse_conversion_complex(t_list **conversions, const char **s)
+static int			parse_conv_complex(t_list **convs, const char **s)
 {
-	const char		*type;
-	t_conversion	*temp;
+	const char	*type;
+	t_conv		*temp;
 
 	type = *s + 1;
 	while (ft_strchr(VALID_FIELDS, (int)*type))
@@ -64,35 +64,35 @@ int					parse_conversion_complex(t_list **conversions, const char **s)
 			temp->precision = ft_atoi(*s + 2);
 		else if (ft_strchr("1234567890", *((*s) + 1)))
 			temp->width = ft_atoi(*s + 1);
-		ft_lstadd_back(conversions, ft_lstnew(temp));
+		ft_lstadd_back(convs, ft_lstnew(temp));
 	}
 	else
 	{
-		ft_lstclear(conversions, &del_conversion);
+		ft_lstclear(convs, &del_conv);
 		return (0);
 	}
 	*s = type;
 	return (1);
 }
 
-t_list				*parse_conversions(const char *s)
+t_list				*parse_convs(const char *s)
 {
-	t_list			*conversions;
+	t_list		*convs;
 
-	conversions = NULL;
+	convs = NULL;
 	while (*s)
 	{
-		if (*s == '%' && ft_strchr(VALID_CONVERSIONS, (int) *(s + 1)))
+		if (*s == '%' && ft_strchr(VALID_CONVERSIONS, (int)*(s + 1)))
 		{
-			if (!parse_conversion_simple(&conversions, &s))
+			if (!parse_conv_simple(&convs, &s))
 				return (NULL);
 		}
-		else if (*s == '%' && ft_strchr(VALID_FIELDS, (int) *(s + 1)))
+		else if (*s == '%' && ft_strchr(VALID_FIELDS, (int)*(s + 1)))
 		{
-			if (!parse_conversion_complex(&conversions, &s))
+			if (!parse_conv_complex(&convs, &s))
 				return (NULL);
 		}
 		s++;
 	}
-	return (conversions);
+	return (convs);
 }
