@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 18:38:35 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/25 20:53:36 by fbes          ########   odam.nl         */
+/*   Updated: 2020/11/25 21:17:49 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static t_conv	*new_conv(const char *pos, char c, int format_size)
 	return (conv);
 }
 
-static void			del_conv(void *conv)
+static void		del_conv(void *conv)
 {
 	free(conv);
 }
 
-static int			parse_conv_simple(t_list **convs, const char **s)
+static int		parse_conv_simple(t_list **convs, const char **s)
 {
 	t_conv		*temp;
 
@@ -49,7 +49,7 @@ static int			parse_conv_simple(t_list **convs, const char **s)
 	return (1);
 }
 
-static int			parse_conv_complex(t_list **convs, const char **s)
+static int		parse_conv_complex(t_list **convs, const char **s)
 {
 	const char	*type;
 	t_conv		*temp;
@@ -62,7 +62,7 @@ static int			parse_conv_complex(t_list **convs, const char **s)
 	{
 		if (*((*s) + 1) == '.')
 			temp->precision = ft_atoi(*s + 2);
-		else if (ft_strchr("1234567890", *((*s) + 1)))
+		else if (ft_strchr("-1234567890", *((*s) + 1)))
 			temp->width = ft_atoi(*s + 1);
 		ft_lstadd_back(convs, ft_lstnew(temp));
 	}
@@ -75,7 +75,7 @@ static int			parse_conv_complex(t_list **convs, const char **s)
 	return (1);
 }
 
-t_list				*parse_convs(const char *s)
+t_list			*parse_convs(const char *s)
 {
 	t_list		*convs;
 
