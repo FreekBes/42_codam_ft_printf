@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:41:41 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/25 20:52:18 by fbes          ########   odam.nl         */
+/*   Updated: 2020/11/25 21:02:01 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,21 @@ int		ft_printf(const char *format, ...)
 {
 	va_list			params;
 	t_list			*conversions;
-	t_list			*conv;
-	t_conv			*temp;
+	t_list			*conv_li;
 	const char		*start;
 
 	va_start(params, format);
 	conversions = parse_convs(format);
 	if (!conversions)
 		write(1, "[WARNING] conversions == NULL!!!\n", 33);
-	conv = conversions;
-	while (conv)
-	{
-		((t_conv *)conv->content)->input = va_arg(params, void *);
-		conv = conv->next;
-	}
-	conv = conversions;
+	conv_li = conversions;
 	start = format;
-	while (conv)
+	while (conv_li)
 	{
-		temp = (t_conv *)conv->content;
-		write(1, start, temp->position - start);
-		if (temp->type == 's')
-			write(1, temp->input, (temp->precision > -1 ? temp->precision : ft_strlen(temp->input)));
-		else if (temp->type == 'c')
-			ft_putchar_fd((char)temp->input, 1);
-		else if (temp->type == 'd' || temp->type == 'i')
-			ft_putnbr_fd((int)temp->input, 1);
-		else if (temp->type == '%')
-			ft_putchar_fd('%', 1);
-		else
-		{
-			ft_putstr_fd("[INVALID_TYPE=", 1);
-			ft_putchar_fd(temp->type, 1);
-			ft_putchar_fd(']', 1);
-		}
-		start = temp->end;
-		conv = conv->next;
+		write(1, start, ((t_conv *)conv_li->content)->position - start);
+		handle_conv((t_conv *)conv_li->content, va_arg(params, void *));
+		start = ((t_conv *)conv_li->content)->end;
+		conv_li = conv_li->next;
 	}
 	ft_putstr_fd((char *)start, 1);
 	va_end(params);

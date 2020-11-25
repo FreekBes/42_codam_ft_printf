@@ -6,12 +6,12 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/25 17:36:28 by fbes          #+#    #+#                  #
-#    Updated: 2020/11/25 19:30:49 by fbes          ########   odam.nl          #
+#    Updated: 2020/11/25 20:54:40 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME =		libftprintf.a
-SRCS =		ft_printf.c conversions.c
+SRCS =		ft_printf.c conversions.c input_output.c
 OBJS =		$(SRCS:.c=.o)
 CFLAGS =	-Wall -Wextra -Werror
 
