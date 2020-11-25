@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 18:38:35 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/25 20:51:53 by fbes          ########   odam.nl         */
+/*   Updated: 2020/11/25 20:53:36 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int			parse_conv_simple(t_list **convs, const char **s)
 {
 	t_conv		*temp;
 
-	temp = new_conversion(*s, *((*s) + 1), 2);
+	temp = new_conv(*s, *((*s) + 1), 2);
 	if (temp)
 		ft_lstadd_back(convs, ft_lstnew(temp));
 	else
@@ -57,7 +57,7 @@ static int			parse_conv_complex(t_list **convs, const char **s)
 	type = *s + 1;
 	while (ft_strchr(VALID_FIELDS, (int)*type))
 		type++;
-	temp = new_conversion(*s, (char)*type, type - *s + 1);
+	temp = new_conv(*s, (char)*type, type - *s + 1);
 	if (temp)
 	{
 		if (*((*s) + 1) == '.')
