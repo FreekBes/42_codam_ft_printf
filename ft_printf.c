@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:41:41 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/25 19:51:32 by fbes          ########   odam.nl         */
+/*   Updated: 2020/11/25 20:27:51 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int		ft_printf(const char *format, ...)
 
 	va_start(params, format);
 	conversions = parse_conversions(format);
+	if (!conversions)
+		write(1, "[WARNING] conversions == NULL!!!\n", 33);
 	conv = conversions;
 	while (conv)
 	{
@@ -35,7 +37,7 @@ int		ft_printf(const char *format, ...)
 		temp = (t_conversion *)conv->content;
 		write(1, start, temp->position - start);
 		if (temp->type == 's')
-			ft_putstr_fd(temp->input, 1);
+			write(1, temp->input, (temp->precision > -1 ? temp->precision : ft_strlen(temp->input)));
 		else if (temp->type == 'c')
 			ft_putchar_fd((char)temp->input, 1);
 		else if (temp->type == 'd' || temp->type == 'i')
