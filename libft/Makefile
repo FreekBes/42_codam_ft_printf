@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/10/26 14:25:38 by fbes          #+#    #+#                  #
-#    Updated: 2020/11/25 21:56:10 by fbes          ########   odam.nl          #
+#    Updated: 2020/11/25 22:14:20 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS =		ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c \
 			ft_split.c ft_strchr.c ft_strdup.c ft_strjoin.c \
 			ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c \
 			ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c \
-			ft_substr.c ft_tolower.c ft_toupper.c
+			ft_substr.c ft_tolower.c ft_toupper.c \
 			ft_lstnew.c ft_lstadd_front.c ft_lstsize.c \
 			ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
 			ft_lstclear.c ft_lstiter.c ft_lstmap.c
@@ -42,7 +42,8 @@ bonus: $(NAME)
 clean:
 	rm -f $(OBJS)
 
-fclean: clean
+fclean:
+	rm -f $(OBJS)
 	rm -f $(NAME)
 
 re: fclean all

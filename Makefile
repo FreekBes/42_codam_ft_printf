@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/25 17:36:28 by fbes          #+#    #+#                  #
-#    Updated: 2020/11/25 21:58:15 by fbes          ########   odam.nl          #
+#    Updated: 2020/11/25 22:14:13 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ clean:
 	rm -f $(OBJS)
 	make -C libft clean
 
-fclean: clean
+fclean:
+	rm -f $(OBJS)
 	rm -f $(NAME)
 	make -C libft fclean
 
