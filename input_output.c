@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 20:54:27 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 20:05:41 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/02 20:10:48 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	handle_conv(t_conv *conv, void *input)
 	else if (conv->type == 'c' || conv->type == '%')
 		written_len = 1;
 	else if (conv->type == 'd' || conv->type == 'i')
-		written_len = ft_numlen(ft_abs((int)input), 10);
+		written_len = ft_isneg((int)input) + ft_numlen(ft_abs((int)input), 10);
 	else if (conv->type == 'u')
 		written_len = ft_numlen((unsigned int)input, 10);
 	else if (conv->type == 'X' || conv->type == 'x')
-		written_len = ft_numlen((unsigned int)input, 16);
+		written_len = -ft_isneg((int)input) + ft_numlen((unsigned int)input, 16);
 	else if (conv->type == 'p')
 		written_len = ft_ptrlen((intptr_t)input);
 	else
