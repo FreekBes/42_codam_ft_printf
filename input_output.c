@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 20:54:27 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/25 21:21:50 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/02 18:42:24 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ void	handle_conv(t_conv *conv, void *input)
 		ft_putchar_fd((char)input, 1);
 	else if (conv->type == 'd' || conv->type == 'i')
 		ft_putnbr_fd((int)input, 1);
+	else if (conv->type == 'X')
+		ft_putnbr_base_fd((int) input, "0123456789ABCDEF", 1);
+	else if (conv->type == 'x')
+		ft_putnbr_base_fd((int) input, "0123456789abcdef", 1);
+	else if (conv->type == 'p')
+		ft_putptr_fd((intptr_t) input, 1);
 	else if (conv->type == '%')
 		ft_putchar_fd('%', 1);
 	else
