@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_putnbr_fd.c                                     :+:    :+:            */
+/*   ft_putptr_fd.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/08/12 18:42:02 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 18:22:02 by fbes          ########   odam.nl         */
+/*   Created: 2020/12/02 18:37:56 by fbes          #+#    #+#                 */
+/*   Updated: 2020/12/02 18:41:32 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_putnbr_fd(int n, int fd)
+static void		nbr_loop(intptr_t ptr, int fd)
 {
-	if (n == -2147483648)
+	static char base[] = "0123456789abcdef";
+
+	if (ptr != 0)
 	{
-		write(fd, "-2147483648", 11);
+		nbr_loop(ptr / 16, fd);
+		write(fd, &base[ptr % 16], 1);
+	}
+}
+
+void			ft_putptr_fd(intptr_t ptr, int fd)
+{
+	write(fd, "0x", 2);
+	if (ptr == 0)
+	{
+		write(fd, "0", 1);
 		return ;
 	}
-	if (n < 0)
-	{
-		write(fd, "-", 1);
-		n *= -1;
-	}
-	ft_putnbr_base_fd((unsigned int)n, "0123456789", fd);
+	nbr_loop(ptr, fd);
 }
