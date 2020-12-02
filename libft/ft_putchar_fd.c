@@ -6,13 +6,13 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/28 13:28:30 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 18:57:50 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/02 19:13:40 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	ft_putchar_fd(char c, int fd)
+int		ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
 	return (1);

@@ -6,16 +6,16 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:49:16 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 19:02:44 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/02 19:14:07 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int			is_valid_base(char *base)
+static int	is_valid_base(char *base)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = 0;
 	while (base[i] != '\0')
@@ -36,9 +36,9 @@ static int			is_valid_base(char *base)
 	return (1);
 }
 
-static unsigned int	nbr_loop(unsigned int n, char *base, int base_num, int fd)
+static int	nbr_loop(unsigned int n, char *base, int base_num, int fd)
 {
-	unsigned int	written_chars;
+	int		written_chars;
 
 	written_chars = 0;
 	if (n != 0)
@@ -50,7 +50,7 @@ static unsigned int	nbr_loop(unsigned int n, char *base, int base_num, int fd)
 	return (written_chars);
 }
 
-unsigned int		ft_putnbr_base_fd(unsigned int n, char *base, int fd)
+int			ft_putnbr_base_fd(unsigned int n, char *base, int fd)
 {
 	int		base_num;
 

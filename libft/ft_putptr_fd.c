@@ -6,16 +6,16 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 18:37:56 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 19:01:41 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/02 19:14:53 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static unsigned int	ptr_loop(intptr_t ptr, int fd)
+static int	ptr_loop(intptr_t ptr, int fd)
 {
-	static char		base[] = "0123456789abcdef";
-	unsigned int	written_chars;
+	static char	base[] = "0123456789abcdef";
+	int			written_chars;
 
 	written_chars = 0;
 	if (ptr != 0)
@@ -27,7 +27,7 @@ static unsigned int	ptr_loop(intptr_t ptr, int fd)
 	return (written_chars);
 }
 
-unsigned int		ft_putptr_fd(intptr_t ptr, int fd)
+int			ft_putptr_fd(intptr_t ptr, int fd)
 {
 	write(fd, "0x", 2);
 	if (ptr == 0)

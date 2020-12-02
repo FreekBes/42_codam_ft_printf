@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/26 14:35:23 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 18:58:17 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/02 20:06:13 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void			*ft_memmove(void *dest, const void *src, size_t n);
 void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 size_t			ft_strlen(const char *s);
+int				ft_numlen(unsigned int n, int base);
+int				ft_ptrlen(intptr_t ptr);
 size_t			ft_strlcpy(char *dest, const char *src, size_t size);
 size_t			ft_strlcat(char *dest, const char *src, size_t size);
 char			*ft_strchr(const char *s, int c);
@@ -55,12 +57,12 @@ char			**ft_splitset(char const *s, char const *set);
 char			**ft_split(char const *s, char c);
 char			*ft_itoa(int n);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-unsigned int	ft_putchar_fd(char c, int fd);
-unsigned int	ft_putendl_fd(char *s, int fd);
-unsigned int	ft_putnbr_fd(int n, int fd);
-unsigned int	ft_putnbr_base_fd(unsigned int n, char *base, int fd);
-unsigned int	ft_putptr_fd(intptr_t ptr, int fd);
-unsigned int	ft_putstr_fd(char *s, int fd);
+int				ft_putchar_fd(char c, int fd);
+int				ft_putendl_fd(char *s, int fd);
+int				ft_putnbr_fd(int n, int fd);
+int				ft_putnbr_base_fd(unsigned int n, char *base, int fd);
+int				ft_putptr_fd(intptr_t ptr, int fd);
+int				ft_putstr_fd(char *s, int fd);
 t_list			*ft_lstnew(void *content);
 void			ft_lstadd_front(t_list **lst, t_list *new);
 int				ft_lstsize(t_list *lst);
@@ -71,5 +73,6 @@ void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst,
 					void *(*f)(void *), void (*del)(void *));
+unsigned int	ft_abs(int n);
 
 #endif
