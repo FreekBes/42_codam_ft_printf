@@ -1,0 +1,3 @@
+- debug a lot
+- add support for the asterisk flag
+- bonus?
