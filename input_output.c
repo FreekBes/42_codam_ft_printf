@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 20:54:27 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 18:47:50 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/02 20:05:41 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,26 @@ void	write_empty(int length)
 
 void	handle_conv(t_conv *conv, void *input)
 {
-	int		len;
+	int		written_len;
 
 	if (conv->type == 's')
-	{
-		len = (int)ft_strlen(input);
-		if (len < conv->width)
-			write_empty(conv->width - len);
-		write(1, input, (conv->precision > -1 ? conv->precision : len));
-		if (conv->width < 0 && -len > conv->width)
-			write_empty(-(conv->width) - len);
-	}
+		written_len = (int)ft_strlen(input);
+	else if (conv->type == 'c' || conv->type == '%')
+		written_len = 1;
+	else if (conv->type == 'd' || conv->type == 'i')
+		written_len = ft_numlen(ft_abs((int)input), 10);
+	else if (conv->type == 'u')
+		written_len = ft_numlen((unsigned int)input, 10);
+	else if (conv->type == 'X' || conv->type == 'x')
+		written_len = ft_numlen((unsigned int)input, 16);
+	else if (conv->type == 'p')
+		written_len = ft_ptrlen((intptr_t)input);
+	else
+		written_len = 0;
+	if (written_len < conv->width)
+		write_empty(conv->width - written_len);
+	if (conv->type == 's')
+		write(1, input, (conv->precision > -1 ? conv->precision : written_len));
 	else if (conv->type == 'c')
 		ft_putchar_fd((char)input, 1);
 	else if (conv->type == 'd' || conv->type == 'i')
@@ -50,8 +59,11 @@ void	handle_conv(t_conv *conv, void *input)
 		ft_putchar_fd('%', 1);
 	else
 	{
-		ft_putstr_fd("[INVALID_TYPE=", 1);
-		ft_putchar_fd(conv->type, 1);
-		ft_putchar_fd(']', 1);
+		written_len = ft_putstr_fd("[INVALID_TYPE=", 1);
+		written_len += ft_putchar_fd(conv->type, 1);
+		written_len += ft_putchar_fd(']', 1);
 	}
+
+	if (conv->width < 0 && -written_len > conv->width)
+		write_empty(-(conv->width) - written_len);
 }
