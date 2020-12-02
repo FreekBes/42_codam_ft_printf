@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/26 14:35:23 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 18:41:41 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/02 18:58:17 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ char			**ft_splitset(char const *s, char const *set);
 char			**ft_split(char const *s, char c);
 char			*ft_itoa(int n);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
-void			ft_putchar_fd(char c, int fd);
-void			ft_putendl_fd(char *s, int fd);
-void			ft_putnbr_fd(int n, int fd);
-void			ft_putnbr_base_fd(unsigned int n, char *base, int fd);
-void			ft_putptr_fd(intptr_t ptr, int fd);
-void			ft_putstr_fd(char *s, int fd);
+unsigned int	ft_putchar_fd(char c, int fd);
+unsigned int	ft_putendl_fd(char *s, int fd);
+unsigned int	ft_putnbr_fd(int n, int fd);
+unsigned int	ft_putnbr_base_fd(unsigned int n, char *base, int fd);
+unsigned int	ft_putptr_fd(intptr_t ptr, int fd);
+unsigned int	ft_putstr_fd(char *s, int fd);
 t_list			*ft_lstnew(void *content);
 void			ft_lstadd_front(t_list **lst, t_list *new);
 int				ft_lstsize(t_list *lst);

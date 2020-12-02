@@ -6,30 +6,34 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 18:37:56 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 18:41:32 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/02 19:01:41 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		nbr_loop(intptr_t ptr, int fd)
+static unsigned int	ptr_loop(intptr_t ptr, int fd)
 {
-	static char base[] = "0123456789abcdef";
+	static char		base[] = "0123456789abcdef";
+	unsigned int	written_chars;
 
+	written_chars = 0;
 	if (ptr != 0)
 	{
-		nbr_loop(ptr / 16, fd);
+		written_chars = ptr_loop(ptr / 16, fd);
 		write(fd, &base[ptr % 16], 1);
+		return (written_chars + 1);
 	}
+	return (written_chars);
 }
 
-void			ft_putptr_fd(intptr_t ptr, int fd)
+unsigned int		ft_putptr_fd(intptr_t ptr, int fd)
 {
 	write(fd, "0x", 2);
 	if (ptr == 0)
 	{
 		write(fd, "0", 1);
-		return ;
+		return (3);
 	}
-	nbr_loop(ptr, fd);
+	return (2 + ptr_loop(ptr, fd));
 }

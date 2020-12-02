@@ -6,13 +6,13 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:49:16 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 18:27:40 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/02 19:02:44 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		is_valid_base(char *base)
+static int			is_valid_base(char *base)
 {
 	int i;
 	int j;
@@ -36,26 +36,31 @@ static int		is_valid_base(char *base)
 	return (1);
 }
 
-static void		nbr_loop(unsigned int n, char *base, int base_num, int fd)
+static unsigned int	nbr_loop(unsigned int n, char *base, int base_num, int fd)
 {
+	unsigned int	written_chars;
+
+	written_chars = 0;
 	if (n != 0)
 	{
-		nbr_loop(n / base_num, base, base_num, fd);
+		written_chars = nbr_loop(n / base_num, base, base_num, fd);
 		write(fd, &base[n % base_num], 1);
+		return (written_chars + 1);
 	}
+	return (written_chars);
 }
 
-void			ft_putnbr_base_fd(unsigned int n, char *base, int fd)
+unsigned int		ft_putnbr_base_fd(unsigned int n, char *base, int fd)
 {
 	int		base_num;
 
 	base_num = ft_strlen(base);
 	if (!is_valid_base(base))
-		return ;
+		return (0);
 	if (n == 0)
 	{
 		write(fd, base, 1);
-		return ;
+		return (1);
 	}
-	nbr_loop(n, base, base_num, fd);
+	return (nbr_loop(n, base, base_num, fd));
 }
