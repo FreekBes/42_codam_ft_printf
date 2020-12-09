@@ -6,19 +6,23 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 20:54:27 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 20:16:32 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/09 18:08:45 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	write_empty(int length)
+static int	write_empty(int length)
 {
-	if (length > 0)
+	int i;
+
+	i = length;
+	while (i > 0)
 	{
 		write(1, " ", 1);
-		write_empty(length - 1);
+		i--;
 	}
+	return (length);
 }
 
 static int	get_written_len(t_conv *conv, void *input)
@@ -61,14 +65,17 @@ static int	write_output(t_conv *conv, void *input, int written_len)
 	return (written_len);
 }
 
-void		handle_conv(t_conv *conv, void *input)
+int			handle_conv(t_conv *conv, void *input)
 {
 	int		written_len;
+	int		ret;
 
 	written_len = get_written_len(conv, input);
+	ret = 0;
 	if (written_len < conv->width)
-		write_empty(conv->width - written_len);
-	written_len = write_output(conv, input, written_len);
+		ret += write_empty(conv->width - written_len);
+	ret += write_output(conv, input, written_len);
 	if (conv->width < 0 && -written_len > conv->width)
-		write_empty(-(conv->width) - written_len);
+		ret += write_empty(-(conv->width) - written_len);
+	return (ret);
 }

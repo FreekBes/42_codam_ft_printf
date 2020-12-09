@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:44:06 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/25 21:41:41 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/09 18:01:03 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct		s_conv
 }					t_conv;
 
 t_list				*parse_convs(const char *s);
-void				handle_conv(t_conv *conv, void *input);
+int					handle_conv(t_conv *conv, void *input);
 int					ft_printf(const char *n, ...);
 
 #endif
