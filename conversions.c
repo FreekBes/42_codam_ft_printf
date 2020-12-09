@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 18:38:35 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/09 19:52:05 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/09 20:30:26 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_conv	*new_conv(const char *pos, char c, int format_size)
 		conv->end = pos + format_size;
 		conv->precision = -1;
 		conv->width = 0;
-		conv->empty = ' ';
+		conv->prepend = ' ';
 		conv->alignment = 1;
 	}
 	return (conv);
@@ -98,16 +98,16 @@ static int		parse_conv_complex(t_list **convs, const char **s)
 	{
 		while (ft_strchr(VALID_FIELDS, (int)*c))
 		{
-			if (*c == '0')
-				conv->empty = '0';
+			if (*c == '0' && ft_strchr("s%", (int)*type))
+				conv->prepend = '0';
 			else if (*c == '-')
 				conv->alignment = -1;
 			c++;
 		}
 		if (ft_isdigit((int)*c))
 		{
-			conv->width = conv->alignment * ft_atoi(c);
-			c += ft_numlen(conv->precision, 10);
+			conv->width = ft_atoi(c);
+			c += ft_numlen(conv->width, 10);
 		}
 		else if (*c == '*')
 		{

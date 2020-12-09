@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:44:06 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/09 19:27:50 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/09 20:31:58 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct		s_conv
 	const char		*end;
 	int				width;
 	int				precision;
-	char			empty;
+	char			prepend;
 	int				alignment;
 	char			type;
 	struct s_conv	*next;

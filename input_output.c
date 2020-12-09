@@ -6,25 +6,25 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 20:54:27 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/09 19:45:00 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/09 20:30:12 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
 /*
-** write_empty writes length empty characters to the output.
-** empty characters are defined in the conversion structure.
+** write_empty writes length empty characters c to the output.
 */
 
-static int	write_empty(t_conv *conv, int length)
+static int	write_empty(char c, int length)
 {
 	int i;
 
 	i = length;
 	while (i > 0)
 	{
-		write(1, &(conv->empty), 1);
+		write(1, &c, 1);
 		i--;
 	}
 	return (length);
@@ -39,8 +39,15 @@ static int	write_empty(t_conv *conv, int length)
 
 static int	get_written_len(t_conv *conv, void *input)
 {
+	int	temp;
+
 	if (conv->type == 's')
-		return ((int)ft_strlen(input));
+	{
+		temp = (int)ft_strlen(input);
+		if (conv->precision > 0 && conv->precision < temp)
+			return (conv->precision);
+		return (temp);
+	}
 	else if (conv->type == 'c' || conv->type == '%')
 		return (1);
 	else if (conv->type == 'd' || conv->type == 'i')
@@ -64,7 +71,11 @@ static int	get_written_len(t_conv *conv, void *input)
 static int	write_output(t_conv *conv, void *input, int written_len)
 {
 	if (conv->type == 's')
-		write(1, input, (conv->precision > -1 ? conv->precision : written_len));
+	{
+		if (conv->precision > -1 && conv->precision < written_len)
+			written_len = conv->precision;
+		write(1, input, written_len);
+	}
 	else if (conv->type == 'c')
 		written_len = ft_putchar_fd((char)input, 1);
 	else if (conv->type == 'd' || conv->type == 'i')
@@ -100,10 +111,10 @@ int			handle_conv(t_conv *conv, void *input)
 
 	written_len = get_written_len(conv, input);
 	ret = 0;
-	if (written_len < conv->width)
-		ret += write_empty(conv, conv->width - written_len);
+	if (conv->alignment > 0 &&written_len < conv->width)
+		ret += write_empty(conv->prepend, conv->width - written_len);
 	ret += write_output(conv, input, written_len);
-	if (conv->width < 0 && -written_len > conv->width)
-		ret += write_empty(conv, -(conv->width) - written_len);
+	if (conv->alignment < 0 && written_len < conv->width)
+		ret += write_empty(' ', conv->width - written_len);
 	return (ret);
 }
