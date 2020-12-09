@@ -6,12 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 20:54:27 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/09 20:30:12 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/09 20:40:40 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 /*
 ** write_empty writes length empty characters c to the output.
@@ -106,9 +105,12 @@ static int	write_output(t_conv *conv, void *input, int written_len)
 
 int			handle_conv(t_conv *conv, void *input)
 {
-	int		written_len;
-	int		ret;
+	static char		empty[] = "(null)";
+	int				written_len;
+	int				ret;
 
+	if (!input)
+		input = &empty;
 	written_len = get_written_len(conv, input);
 	ret = 0;
 	if (conv->alignment > 0 &&written_len < conv->width)
