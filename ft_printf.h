@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:44:06 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/09 18:01:03 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/09 19:27:50 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <stdarg.h>
 
 # define VALID_CONVERSIONS "cspdiuxX%"
-# define VALID_FIELDS "-1234567890.*"
+# define VALID_FIELDS "-0"
+# define VALID_FIELDS_INCL_DIGITS "-1234567890.*"
 
 typedef struct		s_conv
 {
@@ -25,6 +26,8 @@ typedef struct		s_conv
 	const char		*end;
 	int				width;
 	int				precision;
+	char			empty;
+	int				alignment;
 	char			type;
 	struct s_conv	*next;
 }					t_conv;
