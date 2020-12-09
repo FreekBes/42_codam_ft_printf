@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 18:38:35 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/09 19:49:35 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/09 19:52:05 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static int		parse_conv_complex(t_list **convs, const char **s)
 		}
 		if (ft_isdigit((int)*c))
 		{
-			conv->width = ft_atoi(c);
+			conv->width = conv->alignment * ft_atoi(c);
 			c += ft_numlen(conv->precision, 10);
 		}
 		else if (*c == '*')

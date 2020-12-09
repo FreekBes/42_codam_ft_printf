@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:51:53 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/09 19:43:29 by fbes          ########   odam.nl         */
+/*   Updated: 2020/12/09 19:51:11 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int		main(int argc, char **argv)
 	pointer = &testing;
 	//ret = printf("   printf: %s\n", "test");
 	//ft_ret = ft_printf("ft_printf: %s\n", "test");
-	ret = printf("   printf: %s, %11srew, %11rew\n", "test123", "test");
-	ft_ret = ft_printf("ft_printf: %s, %11srew, %11rew\n", "test123", "test");
+	ret = printf("   printf: %s, %-11srew, %11rew\n", "test123", "test");
+	ft_ret = ft_printf("ft_printf: %s, %-11srew, %11rew\n", "test123", "test");
 	printf("   ret: %d\n", ret);
 	printf("ft_ret: %d\n", ft_ret);
 	return (0);
