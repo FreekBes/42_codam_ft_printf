@@ -6,13 +6,13 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/01 21:51:22 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 19:13:48 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:21:42 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_putendl_fd(char *s, int fd)
+int	ft_putendl_fd(char *s, int fd)
 {
 	int	written_chars;
 

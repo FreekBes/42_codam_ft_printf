@@ -6,11 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 19:31:44 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 20:08:57 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:21:20 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_numlen(unsigned int n, int base)
+int	ft_numlen(unsigned int n, int base)
 {
 	if (n < 10)
 		return (1);

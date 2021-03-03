@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 16:32:18 by fbes          #+#    #+#                 */
-/*   Updated: 2020/10/28 12:55:53 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:15:27 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	*ft_itoad(unsigned int n, int neg, int digits)
 	return (res);
 }
 
-char		*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	int		digits;
 	int		neg;

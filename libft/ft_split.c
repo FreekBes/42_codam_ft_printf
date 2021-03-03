@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 15:41:13 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/07 16:36:50 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:22:46 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static size_t	ft_getsepsamount(char const *s, char c)
 	return (amount);
 }
 
-static char		**ft_getpartsstart(char const *s, char c, size_t amount)
+static char	**ft_getpartsstart(char const *s, char c, size_t amount)
 {
 	size_t	i;
 	size_t	j;
@@ -59,7 +59,7 @@ static char		**ft_getpartsstart(char const *s, char c, size_t amount)
 	return (ret);
 }
 
-static char		**ft_getpartsend(char const *s, char c, size_t amount)
+static char	**ft_getpartsend(char const *s, char c, size_t amount)
 {
 	size_t	i;
 	size_t	j;
@@ -88,7 +88,7 @@ static char		**ft_getpartsend(char const *s, char c, size_t amount)
 	return (ret);
 }
 
-static char		**splitfree(char **arr, char **p_s, char **p_e, size_t amount)
+static char	**splitfree(char **arr, char **p_s, char **p_e, size_t amount)
 {
 	size_t	i;
 
@@ -110,7 +110,7 @@ static char		**splitfree(char **arr, char **p_s, char **p_e, size_t amount)
 	return (NULL);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**arr;
 	char	**p_start;

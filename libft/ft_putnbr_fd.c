@@ -6,13 +6,13 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/12 18:42:02 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 19:14:37 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:22:09 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_putnbr_fd(int n, int fd)
+int	ft_putnbr_fd(int n, int fd)
 {
 	int		writes;
 

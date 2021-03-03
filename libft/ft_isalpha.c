@@ -6,11 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/01 21:48:56 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/07 16:27:59 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:14:29 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isalpha(int c)
+int	ft_isalpha(int c)
 {
 	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);

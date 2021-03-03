@@ -6,11 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/01 21:49:33 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/01 21:49:37 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:14:41 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		ft_isascii(int c)
+int	ft_isascii(int c)
 {
 	if (c >= 0 && c <= 127)
 		return (1);

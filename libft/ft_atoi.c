@@ -6,19 +6,19 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 15:17:14 by fbes          #+#    #+#                 */
-/*   Updated: 2020/11/07 16:25:31 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:17:34 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 static int	ft_is_whitespace(char c)
 {
 	if (
-		c == ' ' ||
-		c == '\f' ||
-		c == '\n' ||
-		c == '\r' ||
-		c == '\t' ||
-		c == '\v')
+		c == ' '
+		|| c == '\f'
+		|| c == '\n'
+		|| c == '\r'
+		|| c == '\t'
+		|| c == '\v')
 	{
 		return (1);
 	}
@@ -33,7 +33,7 @@ static int	ft_is_odd_or_even(int n)
 		return (-1);
 }
 
-int			ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int		num;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/02 17:49:16 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/02 19:14:07 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:21:55 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	nbr_loop(unsigned int n, char *base, int base_num, int fd)
 	return (written_chars);
 }
 
-int			ft_putnbr_base_fd(unsigned int n, char *base, int fd)
+int	ft_putnbr_base_fd(unsigned int n, char *base, int fd)
 {
 	int		base_num;
 
