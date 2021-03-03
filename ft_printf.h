@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:44:06 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/09 20:31:58 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:26:21 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 
 # define VALID_CONVERSIONS "cspdiuxX%"
 # define VALID_FIELDS "-0"
-# define VALID_FIELDS_INCL_DIGITS "-1234567890.*"
+# define VALID_FIELDS_DIG "-1234567890.*"
 
-typedef struct		s_conv
+typedef struct s_conv
 {
 	const char		*position;
 	const char		*end;

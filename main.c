@@ -6,14 +6,14 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:51:53 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/09 20:41:01 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:09:02 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-int		main(void)
+int	main(void)
 {
 	int		testing;
 	int		*pointer;

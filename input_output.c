@@ -6,19 +6,17 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 20:54:27 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/09 20:40:40 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 18:08:47 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-/*
-** write_empty writes length empty characters c to the output.
-*/
+// write_empty writes length empty characters c to the output.
 
 static int	write_empty(char c, int length)
 {
-	int i;
+	int	i;
 
 	i = length;
 	while (i > 0)
@@ -29,12 +27,10 @@ static int	write_empty(char c, int length)
 	return (length);
 }
 
-/*
-** get_written_len returns the length of the conversion to be written to the output.
-** the function returns 1 if the conversion type is invalid,
-** since then the conversion type will get printed as a character,
-** which is 1 in length.
-*/
+// get_written_len returns the length of the conversion to be written to
+// the output. the function returns 1 if the conversion type is invalid,
+// since then the conversion type will get printed as a character,
+// which is 1 in length.
 
 static int	get_written_len(t_conv *conv, void *input)
 {
@@ -60,12 +56,10 @@ static int	get_written_len(t_conv *conv, void *input)
 	return (1);
 }
 
-/*
-** write_output writes the conversion to the output.
-** it takes written_len as a parameter for the length of the conversion's output,
-** limiting for example a string conversion to a length of written_len if precision
-** is not set. Otherwise precision would be used.
-*/
+// write_output writes the conversion to the output.
+// it takes written_len as a parameter for the length of the conversion's
+// output, limiting for example a string conversion to a length of
+// written_len if precision is not set. Otherwise precision would be used.
 
 static int	write_output(t_conv *conv, void *input, int written_len)
 {
@@ -94,16 +88,15 @@ static int	write_output(t_conv *conv, void *input, int written_len)
 	return (written_len);
 }
 
-/*
-** handle_conv handles the conversion. first it retrieves the length to be written
-** to output. if that number is smaller than the width given in the format string,
-** empty characters will get written to output. then the conversion is written,
-** after that empty characters will get written if the width is smaller than 0
-** (which states that the conversion should be aligned to the left, thus empty
-** characters need to be written to the right side of the conversion).
-*/
+// handle_conv handles the conversion. first it retrieves the length
+// to be written  to output. if that number is smaller than the width
+// given in the format string, empty characters will get written to output.
+// then the conversion is written, after that empty characters will get
+// written if the width is smaller than 0 (which states that the conversion
+// should be aligned to the left, thus empty characters need to be written
+// to the right side of the conversion).
 
-int			handle_conv(t_conv *conv, void *input)
+int	handle_conv(t_conv *conv, void *input)
 {
 	static char		empty[] = "(null)";
 	int				written_len;
@@ -113,7 +106,7 @@ int			handle_conv(t_conv *conv, void *input)
 		input = &empty;
 	written_len = get_written_len(conv, input);
 	ret = 0;
-	if (conv->alignment > 0 &&written_len < conv->width)
+	if (conv->alignment > 0 && written_len < conv->width)
 		ret += write_empty(conv->prepend, conv->width - written_len);
 	ret += write_output(conv, input, written_len);
 	if (conv->alignment < 0 && written_len < conv->width)

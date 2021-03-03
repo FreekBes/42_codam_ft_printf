@@ -6,13 +6,13 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:41:41 by fbes          #+#    #+#                 */
-/*   Updated: 2020/12/09 19:34:53 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 17:59:36 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
 	va_list			params;
 	t_list			*conversions;
