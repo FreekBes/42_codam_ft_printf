@@ -1,3 +1,5 @@
-- debug a lot
+- debug a lot (pft_2019 works on linux too, supposedly)
+- bugs to fix:
+	- precision field for i & d types, should prepend 0 and not a space
 - add support for the asterisk flag
 - bonus?

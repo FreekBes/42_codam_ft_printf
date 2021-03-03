@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 18:38:35 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/03 18:07:08 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 19:13:18 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@
 // please note that the conversion type can be invalid (not in
 // VALID_CONVERSIONS) - the structure will then still be created,
 // in order to allow for any field width given to be written to output.
+// a short explanation for all parameters in the structure:
+// position: the position of the conversion in the format string
+// type: the conversion type field
+// end: the end position of the conversion in the format string
+// precision: the precision field (maximum  limit on output)
+// width: i forgot
+// prepend: if "empty" characters need to be printed, this will be the one
+// alignment: left- or right alignment in the conversion. used with width
 
 static t_conv	*new_conv(const char *pos, char c, int format_size)
 {

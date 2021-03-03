@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 20:54:27 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/03 18:08:47 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/03 19:41:55 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	get_written_len(t_conv *conv, void *input)
 	if (conv->type == 's')
 	{
 		temp = (int)ft_strlen(input);
-		if (conv->precision > 0 && conv->precision < temp)
+		if (conv->precision > -1 && conv->precision < temp)
 			return (conv->precision);
 		return (temp);
 	}
@@ -102,14 +102,49 @@ int	handle_conv(t_conv *conv, void *input)
 	int				written_len;
 	int				ret;
 
-	if (!input)
+	if (!input && conv->type != 'd' && conv->type != 'i')
 		input = &empty;
 	written_len = get_written_len(conv, input);
 	ret = 0;
 	if (conv->alignment > 0 && written_len < conv->width)
 		ret += write_empty(conv->prepend, conv->width - written_len);
+	else if ((conv->type == 'd' || conv->type == 'i')
+		&& conv->alignment > 0 && written_len < conv->precision)
+		ret += write_empty('0', conv->precision - written_len);
 	ret += write_output(conv, input, written_len);
 	if (conv->alignment < 0 && written_len < conv->width)
 		ret += write_empty(' ', conv->width - written_len);
+	// print_conv(conv, input);
 	return (ret);
+}
+
+// print_conv is used for debugging
+
+void print_conv(t_conv *conv, void *input)
+{
+	ft_putendl_fd("\n\nCONVERSION STRUCT DEBUGGING CONTENTS", 1);
+	ft_putstr_fd("input: ", 1);
+	ft_putptr_fd((intptr_t)input, 1);
+	ft_putchar_fd('\n', 1);
+	ft_putstr_fd("position: ", 1);
+	ft_putptr_fd((intptr_t)conv->position, 1);
+	ft_putchar_fd('\n', 1);
+	ft_putstr_fd("end: ", 1);
+	ft_putptr_fd((intptr_t)conv->end, 1);
+	ft_putchar_fd('\n', 1);
+	ft_putstr_fd("width: ", 1);
+	ft_putnbr_fd(conv->width, 1);
+	ft_putchar_fd('\n', 1);
+	ft_putstr_fd("precision: ", 1);
+	ft_putnbr_fd(conv->precision, 1);
+	ft_putchar_fd('\n', 1);
+	ft_putstr_fd("prepend: ", 1);
+	ft_putchar_fd(conv->prepend, 1);
+	ft_putchar_fd('\n', 1);
+	ft_putstr_fd("alignment: ", 1);
+	ft_putnbr_fd(conv->alignment, 1);
+	ft_putchar_fd('\n', 1);
+	ft_putstr_fd("type: ", 1);
+	ft_putchar_fd(conv->type, 1);
+	ft_putstr_fd("\n\n\n", 1);
 }
