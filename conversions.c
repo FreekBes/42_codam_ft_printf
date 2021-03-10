@@ -99,7 +99,7 @@ static int	parse_conv_complex(t_list **convs, const char **s)
 	{
 		while (ft_strchr(VALID_FIELDS, (int)*c))
 		{
-			if (*c == '0' && ft_strchr("s%", (int)*type))
+			if (*c == '0')
 				conv->prepend = '0';
 			else if (*c == '-')
 				conv->alignment = -1;
