@@ -23,10 +23,8 @@ int	main(void)
 
 	testing = 9999;
 	pointer = &testing;
-	//ret = printf("   printf: \"%.6i\"\n", -3);
-	ret = printf("%.6i\n", -3);
-	//ft_ret = ft_printf("ft_printf: \"%.6i\"\n", -3);
-	ft_ret = ft_printf("%.6i\n", -3);
+	ret = printf("   printf: \"%.7i\"\n", -14);
+	ft_ret = ft_printf("ft_printf: \"%.7i\"\n", -14);
 	//ret = printf("   printf: %s, %-11srew, %11rew\n", "test123", "test");
 	//ft_ret = ft_printf("ft_printf: %s, %-11srew, %11rew\n", "test123", "test");
 	printf("   ret: %d\n", ret);

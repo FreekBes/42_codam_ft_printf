@@ -47,7 +47,7 @@ static int	get_written_len(t_conv *conv, void *input)
 	else if (conv->type == 'c' || conv->type == '%')
 		return (1);
 	else if (conv->type == 'd' || conv->type == 'i')
-		return (ft_numlen(ft_abs((int)input), 10));
+		return (ft_isneg((int)input) + ft_numlen(ft_abs((int)input), 10));
 	else if (conv->type == 'u')
 		return (ft_numlen((unsigned int)input, 10));
 	else if (conv->type == 'X' || conv->type == 'x')
@@ -107,13 +107,13 @@ int	handle_conv(t_conv *conv, void *input)
 		input = &empty;
 	written_len = get_written_len(conv, input);
 	ret = 0;
-	if ((conv->type == 'd' || conv->type == 'i') && (int)input < 0)
-		ret += ft_putchar_fd('-', 1);
 	if (conv->alignment > 0 && written_len < conv->width)
 		ret += write_empty(conv->prepend, conv->width - written_len);
-	else if ((conv->type == 'd' || conv->type == 'i')
+	if ((conv->type == 'd' || conv->type == 'i') && (int)input < 0)
+		ret += ft_putchar_fd('-', 1);
+	if ((conv->type == 'd' || conv->type == 'i')
 		&& conv->alignment > 0 && written_len < conv->precision)
-		ret += write_empty('0', conv->precision - written_len);
+		ret += write_empty('0', conv->precision - written_len + 1);
 	ret += write_output(conv, input, written_len);
 	if (conv->alignment < 0 && written_len < conv->width)
 		ret += write_empty(' ', conv->width - written_len);
