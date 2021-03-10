@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 20:54:27 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/03 19:41:55 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/10 21:00:47 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,20 +106,31 @@ int	handle_conv(t_conv *conv, void *input)
 	if (!input && conv->type != 'd' && conv->type != 'i')
 		input = &empty;
 	written_len = get_written_len(conv, input);
+	//printf("written_len: %d\n", written_len);
 	ret = 0;
 	if ((conv->type == 'd' || conv->type == 'i') && (int)input < 0 && conv->prepend == '0')
 		ret += ft_putchar_fd('-', 1);
 	if (conv->alignment > 0 && written_len < conv->width)
-		ret += write_empty(conv->prepend, conv->width - written_len);
+	{
+		if (conv->precision > 0 && (conv->prepend == '0' || conv->type == 'd' || conv->type == 'i'))
+			ret += write_empty(conv->prepend, conv->width - ft_biggest(conv->precision, written_len) + ft_isneg((int)input));
+		else
+			ret += write_empty(conv->prepend, conv->width - written_len);
+	}
 	if ((conv->type == 'd' || conv->type == 'i') && (int)input < 0 && conv->prepend == ' ')
 		ret += ft_putchar_fd('-', 1);
 	if ((conv->type == 'd' || conv->type == 'i')
-		&& conv->alignment > 0 && written_len < conv->precision)
+		&& written_len < conv->precision)
 		ret += write_empty('0', conv->precision - written_len + ft_isneg((int)input));
 	ret += write_output(conv, input, written_len);
 	if (conv->alignment < 0 && written_len < conv->width)
-		ret += write_empty(' ', conv->width - written_len);
-	// print_conv(conv, input);
+	{
+		if (conv->precision > 0 && (conv->prepend == '0' || conv->type == 'd' || conv->type == 'i'))
+			ret += write_empty(conv->prepend, conv->width - ft_biggest(conv->precision, written_len));
+		else
+			ret += write_empty(conv->prepend, conv->width - written_len);
+	}
+	//print_conv(conv, input);
 	return (ret);
 }
 

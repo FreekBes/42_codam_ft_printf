@@ -23,8 +23,8 @@
 // position: the position of the conversion in the format string
 // type: the conversion type field
 // end: the end position of the conversion in the format string
-// precision: the precision field (maximum  limit on output)
-// width: i forgot
+// precision: amount of characters for width of input
+// width: amount of characters for width of the full output, including precision
 // prepend: if "empty" characters need to be printed, this will be the one
 // alignment: left- or right alignment in the conversion. used with width
 

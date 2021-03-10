@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/26 14:35:23 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/03 18:24:56 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/10 20:36:06 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst,
 					void *(*f)(void *), void (*del)(void *));
 unsigned int	ft_abs(int n);
+int				ft_biggest(int a, int b);
 
 #endif
