@@ -113,7 +113,7 @@ int	handle_conv(t_conv *conv, void *input)
 		ret += ft_putchar_fd('-', 1);
 	if ((conv->type == 'd' || conv->type == 'i')
 		&& conv->alignment > 0 && written_len < conv->precision)
-		ret += write_empty('0', conv->precision - written_len + 1);
+		ret += write_empty('0', conv->precision - written_len + ft_isneg((int)input));
 	ret += write_output(conv, input, written_len);
 	if (conv->alignment < 0 && written_len < conv->width)
 		ret += write_empty(' ', conv->width - written_len);
