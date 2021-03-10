@@ -6,28 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 16:32:18 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/03 18:15:27 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 00:04:27 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_idigits(int n)
-{
-	int	digits;
-
-	if (n == -2147483648)
-		return (10);
-	if (n < 0)
-		n *= -1;
-	digits = 0;
-	while (n > 0)
-	{
-		n /= 10;
-		digits += 1;
-	}
-	return (digits);
-}
 
 static char	*ft_itoad(unsigned int n, int neg, int digits)
 {
@@ -60,7 +43,7 @@ char	*ft_itoa(int n)
 		return (ft_strdup("-2147483648"));
 	if (n == 0)
 		return (ft_strdup("0"));
-	digits = ft_idigits(n);
+	digits = ft_isneg(n) + ft_numlen((unsigned int)n, 10);
 	neg = 0;
 	if (n < 0)
 	{
@@ -68,5 +51,5 @@ char	*ft_itoa(int n)
 		n *= -1;
 		neg = 1;
 	}
-	return (ft_itoad(n, neg, digits));
+	return (ft_itoad((unsigned int)n, neg, digits));
 }

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:44:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/10 23:50:35 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 00:26:32 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,11 @@ static int	write_empty(char c, int length)
 	return (length);
 }
 
-static int	input_to_output(t_conv *conv)
+static int	handle_precision(t_conv *conv)
 {
 	char	*temp;
 	int		len;
 
-	if (conv->type == 's')
-		conv->output = ft_strdup((char *)conv->input);
-	else if (conv->type == 'd' || conv->type == 'i')
-		conv->output = ft_itoa((int)conv->input);
-	else
-	{
-		conv->output = ft_calloc(2, sizeof(char));
-		if (!conv->output)
-			return (-1);
-		conv->output[0] = conv->type;
-	}
-	if (!conv->output)
-		return (-1);
 	if (conv->precision > 0)
 	{
 		len = ft_strlen(conv->output);
@@ -77,7 +64,7 @@ static int	input_to_output(t_conv *conv)
 			free(conv->output);
 			conv->output = temp;
 		}
-		else
+		else if (conv->type == 'd' || conv->type == 'i')
 		{
 			temp = ft_calloc(conv->precision + 1, sizeof(char));
 			if (!temp)
@@ -89,6 +76,32 @@ static int	input_to_output(t_conv *conv)
 		}
 	}
 	return (1);
+}
+
+static int	input_to_output(t_conv *conv)
+{
+	if (conv->type == 's')
+		conv->output = ft_strdup((char *)conv->input);
+	else if (conv->type == 'd' || conv->type == 'i')
+		conv->output = ft_itoa((int)conv->input);
+	else if (conv->type == 'u')
+		conv->output = ft_itoa_base((unsigned int)conv->input, "0123456789");
+	else if (conv->type == 'X')
+		conv->output = ft_itoa_base((int)conv->input, "0123456789ABCDEF");
+	else if (conv->type == 'x')
+		conv->output = ft_itoa_base((int)conv->input, "0123456789abcdef");
+	else if (conv->type == 'p')
+		conv->output = ft_ptoa((intptr_t)conv->input);
+	else
+	{
+		conv->output = ft_calloc(2, sizeof(char));
+		if (!conv->output)
+			return (-1);
+		conv->output[0] = conv->type;
+	}
+	if (!conv->output)
+		return (-1);
+	return (handle_precision(conv));
 }
 
 static int	write_output(t_conv *conv)
