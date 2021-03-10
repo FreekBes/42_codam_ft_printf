@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "stdio.h"
 
 // write_empty writes length empty characters c to the output.
 
@@ -46,7 +47,7 @@ static int	get_written_len(t_conv *conv, void *input)
 	else if (conv->type == 'c' || conv->type == '%')
 		return (1);
 	else if (conv->type == 'd' || conv->type == 'i')
-		return (ft_isneg((int)input) + ft_numlen(ft_abs((int)input), 10));
+		return (ft_numlen(ft_abs((int)input), 10));
 	else if (conv->type == 'u')
 		return (ft_numlen((unsigned int)input, 10));
 	else if (conv->type == 'X' || conv->type == 'x')
@@ -72,7 +73,7 @@ static int	write_output(t_conv *conv, void *input, int written_len)
 	else if (conv->type == 'c')
 		written_len = ft_putchar_fd((char)input, 1);
 	else if (conv->type == 'd' || conv->type == 'i')
-		written_len = ft_putnbr_fd((int)input, 1);
+		written_len = ft_putnbr_fd(ft_abs((int)input), 1);
 	else if (conv->type == 'u')
 		written_len = ft_putnbr_base_fd((unsigned int)input, "0123456789", 1);
 	else if (conv->type == 'X')
@@ -106,6 +107,8 @@ int	handle_conv(t_conv *conv, void *input)
 		input = &empty;
 	written_len = get_written_len(conv, input);
 	ret = 0;
+	if ((conv->type == 'd' || conv->type == 'i') && (int)input < 0)
+		ret += ft_putchar_fd('-', 1);
 	if (conv->alignment > 0 && written_len < conv->width)
 		ret += write_empty(conv->prepend, conv->width - written_len);
 	else if ((conv->type == 'd' || conv->type == 'i')
