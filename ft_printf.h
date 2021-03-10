@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/25 17:44:06 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/03 19:36:41 by fbes          ########   odam.nl         */
+/*   Created: 2021/03/10 22:11:54 by fbes          #+#    #+#                 */
+/*   Updated: 2021/03/10 23:02:17 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define VALID_CONVERSIONS "cspdiuxX%"
 # define VALID_FIELDS "-0"
-# define VALID_FIELDS_DIG "-1234567890.*"
+# define VALID_FIELDS_DIG "-0123456789.*"
 
 typedef struct s_conv
 {
@@ -29,12 +29,13 @@ typedef struct s_conv
 	char			prepend;
 	int				alignment;
 	char			type;
-	struct s_conv	*next;
+	void			*input;
+	char			*output;
 }					t_conv;
 
-t_list				*parse_convs(const char *s);
-int					handle_conv(t_conv *conv, void *input);
+void				del_conv(void *conv);
+t_list				*parse_convs(va_list *params, const char *s);
+int					handle_conv(t_conv *conv);
 int					ft_printf(const char *n, ...);
-void				print_conv(t_conv *conv, void *input);
 
 #endif

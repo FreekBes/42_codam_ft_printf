@@ -5,32 +5,16 @@
 /*                                                     +:+                    */
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/25 18:38:35 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/03 19:13:18 by fbes          ########   odam.nl         */
+/*   Created: 2021/03/10 22:15:37 by fbes          #+#    #+#                 */
+/*   Updated: 2021/03/10 23:34:02 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-// new_conv creates and returns a new conversion structure, with
-// the type set as char c. the length of the whole conversion
-// is defined in parameter format_size. this length is then used
-// while writing non-conversions in the format string to the output.
-// please note that the conversion type can be invalid (not in
-// VALID_CONVERSIONS) - the structure will then still be created,
-// in order to allow for any field width given to be written to output.
-// a short explanation for all parameters in the structure:
-// position: the position of the conversion in the format string
-// type: the conversion type field
-// end: the end position of the conversion in the format string
-// precision: amount of characters for width of input
-// width: amount of characters for width of the full output, including precision
-// prepend: if "empty" characters need to be printed, this will be the one
-// alignment: left- or right alignment in the conversion. used with width
-
 static t_conv	*new_conv(const char *pos, char c, int format_size)
 {
-	t_conv		*conv;
+	t_conv	*conv;
 
 	conv = malloc(sizeof(t_conv));
 	if (conv)
@@ -42,49 +26,20 @@ static t_conv	*new_conv(const char *pos, char c, int format_size)
 		conv->width = 0;
 		conv->prepend = ' ';
 		conv->alignment = 1;
+		conv->input = NULL;
+		conv->output = NULL;
 	}
 	return (conv);
 }
 
-// del_conv is used for the ft_lstclear function in case of errors.
-
-static void	del_conv(void *conv)
+void	del_conv(void *conv)
 {
+	if (((t_conv *)conv)->output)
+		free(((t_conv *)conv)->output);
 	free(conv);
 }
 
-// parse_conv_simple parses a format string in a simple manner.
-// it can only handle format strings without any flag fields.
-// flag fields are set in VALID_FIELDS.
-
-static int	parse_conv_simple(t_list **convs, const char **s)
-{
-	t_conv		*conv;
-
-	conv = new_conv(*s, *((*s) + 1), 2);
-	if (conv)
-		ft_lstadd_back(convs, ft_lstnew(conv));
-	else
-	{
-		ft_lstclear(convs, &del_conv);
-		return (0);
-	}
-	(*s)++;
-	return (1);
-}
-
-// parse_conv_complex parses a format string in a more complex manner.
-// it will first loop through the format string until it finds a character
-// NOT in VALID_FIELDS and not a digit, which will then be set as the
-// conversion type. a character pointer c is set for field flag checks.
-// first it will check for standard field flags 0 and -, and act accordingly.
-// then, it will check for a field width, by checking if c is a digit.
-// if so, the field width will be set to that number and the pointer c
-// will get increased by the amountof digits in that width field,
-// in order to check for a precision flag.
-// if *c == '.', a precision flag is assumed to be present.
-
-static int	parse_conv_complex(t_list **convs, const char **s)
+static int	parse_conv(va_list *params, t_list **convs, const char **s)
 {
 	const char	*type;
 	t_conv		*conv;
@@ -92,12 +47,12 @@ static int	parse_conv_complex(t_list **convs, const char **s)
 
 	c = *s + 1;
 	type = c;
-	while (ft_strchr(VALID_FIELDS_DIG, (int)*type))
+	while (ft_strchr(VALID_FIELDS_DIG, (int)* type))
 		type++;
-	conv = new_conv(*s, (char)*type, type - *s + 1);
+	conv = new_conv(*s, (char)* type, type - *s + 1);
 	if (conv)
 	{
-		while (ft_strchr(VALID_FIELDS, (int)*c))
+		while (ft_strchr(VALID_FIELDS, (int)* c))
 		{
 			if (*c == '0')
 				conv->prepend = '0';
@@ -105,43 +60,33 @@ static int	parse_conv_complex(t_list **convs, const char **s)
 				conv->alignment = -1;
 			c++;
 		}
-		if (ft_isdigit((int)*c))
+		if (*c == '*')
+		{
+			conv->width = va_arg(*params, int);
+			c++;
+		}
+		else if (ft_isdigit((int)*c))
 		{
 			conv->width = ft_atoi(c);
 			c += ft_numlen(conv->width, 10);
-		}
-		else if (*c == '*')
-		{
-			conv->width = 0;
-			c++;
 		}
 		if (*c == '.')
 		{
 			c++;
 			if (*c == '*')
-				conv->precision = 0;
+				conv->precision = va_arg(*params, int);
 			else
 				conv->precision = ft_atoi(c);
 		}
+		conv->input = va_arg(*params, void *);
 		ft_lstadd_back(convs, ft_lstnew(conv));
+		*s = type;
+		return (1);
 	}
-	else
-	{
-		ft_lstclear(convs, &del_conv);
-		return (0);
-	}
-	*s = type;
-	return (1);
+	return (0);
 }
 
-// parse_convs parses all conversions in format string s.
-// there are two parsers available, a simple and a complex one.
-// the complex one is used if any field flags are present,
-// including widths and precisions.
-// all conversions are added to a linked list, and the last item
-// is filled with an empty conversion of type '\0'.
-
-t_list	*parse_convs(const char *s)
+t_list	*parse_convs(va_list *params, const char *s)
 {
 	t_list		*convs;
 	t_conv		*last;
@@ -149,15 +94,13 @@ t_list	*parse_convs(const char *s)
 	convs = NULL;
 	while (*s)
 	{
-		if (*s == '%' && ft_strchr(VALID_CONVERSIONS, (int)*(s + 1)))
+		if (*s == '%')
 		{
-			if (!parse_conv_simple(&convs, &s))
+			if (!parse_conv(params, &convs, &s))
+			{
+				ft_lstclear(&convs, &del_conv);
 				return (NULL);
-		}
-		else if (*s == '%' && ft_strchr(VALID_FIELDS_DIG, (int)*(s + 1)))
-		{
-			if (!parse_conv_complex(&convs, &s))
-				return (NULL);
+			}
 		}
 		s++;
 	}

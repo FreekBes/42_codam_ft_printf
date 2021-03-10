@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:51:53 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/10 21:21:23 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/10 23:49:54 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@ int	main(void)
 
 	testing = 9999;
 	pointer = &testing;
-	ret = printf("   printf: \"%*.*s, %*.*s\"\n", 5, 5, "a", "b");
-	ft_ret = ft_printf("ft_printf: \"%*.*s, %*.*s\"\n", 5, 5, "a", "b");
-	//ret = printf("   printf: %s, %-11srew, %11rew\n", "test123", "test");
-	//ft_ret = ft_printf("ft_printf: %s, %-11srew, %11rew\n", "test123", "test");
+	ret = printf("   printf: \"%.7s\"\n", "abcd");
+	ft_ret = ft_printf("ft_printf: \"%.7s\"\n", "abcd");
+	//ret = printf("   printf: \"%*.*s, %*.*s\"\n", 5, 5, "a", "b");
+	//ft_ret = ft_printf("ft_printf: \"%*.*s, %*.*s\"\n", 5, 5, "a", "b");
+	//ret = printf("   printf: \"%i, %-11.6srew, %%, %-3q, %b, %11rew\"\n", -123, "test");
+	//ft_ret = ft_printf("ft_printf: \"%i, %-11.6srew, %%, %-3q, %b, %11rew\"\n", -123, "test");
 	printf("   ret: %d\n", ret);
 	printf("ft_ret: %d\n", ft_ret);
 	return (0);

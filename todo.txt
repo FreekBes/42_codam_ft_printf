@@ -3,3 +3,4 @@
 	- precision field for i & d types, should prepend 0 and not a space
 - add support for the asterisk flag
 - bonus?
+- Wall Werror Wextra
