@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:44:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 03:49:39 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 03:56:09 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ static int	write_output(t_conv *conv)
 	len = ft_strlen(conv->output);
 	if (conv->type == 'p')
 		len += 2;
+	if (conv->type == 'c' && (int)conv->input == '\0')
+		len += 1;
 	if (conv->prepend == '0' && conv->output[0] == '-')
 		ret += ft_putchar_fd('-', 1);
 	if (conv->alignment > 0 && len < conv->width)
@@ -138,6 +140,8 @@ static int	write_output(t_conv *conv)
 		ret += ft_putstr_fd(conv->output + 1, 1);
 	else
 		ret += ft_putstr_fd(conv->output, 1);
+	if (conv->type == 'c' && (int)conv->input == '\0')
+		ret += ft_putchar_fd('\x00', 1);
 	if (conv->alignment < 0 && len < conv->width)
 		ret += write_empty(conv->prepend, conv->width - len);
 	return (ret);
