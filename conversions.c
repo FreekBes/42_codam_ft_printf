@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:15:37 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 01:55:06 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 02:27:17 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	parse_conv(va_list *params, t_list **convs, const char **s)
 		{
 			if (*c == '-')
 				conv->alignment = -1;
-			else if (*c == '0' && ((*type == 'd' || *type == 'i') || conv->alignment > 0))
+			else if (*c == '0' && ((*type == 'd' || *type == 'i' || *type == 'u') || conv->alignment > 0))
 				conv->prepend = '0';
 			c++;
 		}
@@ -81,7 +81,7 @@ static int	parse_conv(va_list *params, t_list **convs, const char **s)
 			conv->prepend = ' ';
 		}
 		conv->input = va_arg(*params, void *);
-		if (!conv->input && conv->type != 'd' && conv->type != 'i')
+		if (!conv->input && conv->type == 's')
 			conv->input = &empty;
 		ft_lstadd_back(convs, ft_lstnew(conv));
 		*s = type;
