@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:15:37 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 03:30:54 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 03:35:12 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,11 @@ static int	parse_conv(va_list *params, t_list **convs, const char **s)
 		if (*c == '*')
 		{
 			conv->width = va_arg(*params, int);
+			if (conv->width < 0)
+			{
+				conv->alignment = -1;
+				conv->width *= -1;
+			}
 			c++;
 		}
 		else if (ft_isdigit((int)*c))
