@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:11:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/10 23:02:17 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 03:31:22 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libft/libft.h"
 # include <stdarg.h>
 
-# define VALID_CONVERSIONS "cspdiuxX%"
+# define VALID_CONVERSIONS "cspdiuxX"
 # define VALID_FIELDS "-0"
 # define VALID_FIELDS_DIG "-0123456789.*"
 

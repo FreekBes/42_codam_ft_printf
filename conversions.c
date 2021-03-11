@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:15:37 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 02:44:16 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 03:30:54 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ static int	parse_conv(va_list *params, t_list **convs, const char **s)
 				conv->precision = ft_atoi(c);
 			conv->prepend = ' ';
 		}
-		conv->input = va_arg(*params, void *);
+		if (ft_strchr(VALID_CONVERSIONS, (int)conv->type))
+			conv->input = va_arg(*params, void *);
 		if (!conv->input && conv->type == 's')
 			conv->input = &empty;
 		ft_lstadd_back(convs, ft_lstnew(conv));
