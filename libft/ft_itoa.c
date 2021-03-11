@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 16:32:18 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 00:04:27 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 01:32:54 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*ft_itoa(int n)
 		return (ft_strdup("-2147483648"));
 	if (n == 0)
 		return (ft_strdup("0"));
-	digits = ft_isneg(n) + ft_numlen((unsigned int)n, 10);
+	digits = ft_numlen((unsigned int)ft_abs(n), 10);
 	neg = 0;
 	if (n < 0)
 	{

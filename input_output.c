@@ -6,11 +6,12 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:44:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 00:26:32 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 01:33:20 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "stdio.h"
 
 static void	debug_print_conv(t_conv *conv)
 {
@@ -31,7 +32,10 @@ static void	debug_print_conv(t_conv *conv)
 	ft_putstr_fd("\ntype: ", 1);
 	ft_putchar_fd(conv->type, 1);
 	ft_putstr_fd("\noutput: \"", 1);
-	ft_putstr_fd(conv->output, 1);
+	if (conv->output)
+		ft_putstr_fd(conv->output, 1);
+	else
+		ft_putstr_fd("NULL", 1);
 	ft_putstr_fd("\"\n\n\n", 1);
 }
 
@@ -53,7 +57,7 @@ static int	handle_precision(t_conv *conv)
 	char	*temp;
 	int		len;
 
-	if (conv->precision > 0)
+	if (conv->precision > -1)
 	{
 		len = ft_strlen(conv->output);
 		if (len > conv->precision)
@@ -64,7 +68,7 @@ static int	handle_precision(t_conv *conv)
 			free(conv->output);
 			conv->output = temp;
 		}
-		else if (conv->type == 'd' || conv->type == 'i')
+		else if (len < conv->precision && (conv->type == 'd' || conv->type == 'i'))
 		{
 			temp = ft_calloc(conv->precision + 1, sizeof(char));
 			if (!temp)
@@ -121,6 +125,7 @@ static int	write_output(t_conv *conv)
 
 int	handle_conv(t_conv *conv)
 {
+	//debug_print_conv(conv);
 	if (input_to_output(conv))
 	{
 		//debug_print_conv(conv);

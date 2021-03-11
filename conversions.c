@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:15:37 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/10 23:34:02 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 01:23:57 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,24 @@ void	del_conv(void *conv)
 
 static int	parse_conv(va_list *params, t_list **convs, const char **s)
 {
+	static char	empty[] = "(null)";
 	const char	*type;
 	t_conv		*conv;
 	const char	*c;
 
 	c = *s + 1;
 	type = c;
-	while (ft_strchr(VALID_FIELDS_DIG, (int)* type))
+	while (ft_strchr(VALID_FIELDS_DIG, (int)* type) && (int)*type != '\0')
 		type++;
 	conv = new_conv(*s, (char)* type, type - *s + 1);
 	if (conv)
 	{
 		while (ft_strchr(VALID_FIELDS, (int)* c))
 		{
-			if (*c == '0')
-				conv->prepend = '0';
-			else if (*c == '-')
+			if (*c == '-')
 				conv->alignment = -1;
+			else if (*c == '0' && ((*type == 'd' || *type == 'i') || conv->alignment > 0))
+				conv->prepend = '0';
 			c++;
 		}
 		if (*c == '*')
@@ -79,6 +80,8 @@ static int	parse_conv(va_list *params, t_list **convs, const char **s)
 				conv->precision = ft_atoi(c);
 		}
 		conv->input = va_arg(*params, void *);
+		if (!conv->input && conv->type != 'd' && conv->type != 'i')
+			conv->input = &empty;
 		ft_lstadd_back(convs, ft_lstnew(conv));
 		*s = type;
 		return (1);
