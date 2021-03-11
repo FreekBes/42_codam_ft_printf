@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:44:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 01:52:47 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 02:04:14 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	handle_precision(t_conv *conv)
 		len = ft_strlen(conv->output);
 		if ((conv->type == 'd' || conv->type == 'i') && ft_isneg((int)conv->input))
 			len--;
-		if (len > conv->precision && conv->type != 'd' && conv->type != 'i')
+		if (len > conv->precision && ((conv->type != 'd' && conv->type != 'i') || conv->output[0] == '0'))
 		{
 			temp = ft_substr(conv->output, 0, conv->precision);
 			if (!temp)
@@ -124,9 +124,14 @@ static int	write_output(t_conv *conv)
 
 	ret = 0;
 	len = ft_strlen(conv->output);
+	if (conv->prepend == '0' && conv->output[0] == '-')
+		ret += ft_putchar_fd('-', 1);
 	if (conv->alignment > 0 && len < conv->width)
 		ret += write_empty(conv->prepend, conv->width - len);
-	ret += ft_putstr_fd(conv->output, 1);
+	if (conv->prepend == '0' && conv->output[0] == '-')
+		ret += ft_putstr_fd(conv->output + 1, 1);
+	else
+		ret += ft_putstr_fd(conv->output, 1);
 	if (conv->alignment < 0 && len < conv->width)
 		ret += write_empty(conv->prepend, conv->width - len);
 	return (ret);
