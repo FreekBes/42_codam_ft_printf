@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:15:37 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 01:23:57 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 01:55:06 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static int	parse_conv(va_list *params, t_list **convs, const char **s)
 				conv->precision = va_arg(*params, int);
 			else
 				conv->precision = ft_atoi(c);
+			conv->prepend = ' ';
 		}
 		conv->input = va_arg(*params, void *);
 		if (!conv->input && conv->type != 'd' && conv->type != 'i')

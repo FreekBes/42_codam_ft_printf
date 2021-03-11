@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:44:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 01:33:20 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 01:52:47 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ static int	handle_precision(t_conv *conv)
 	if (conv->precision > -1)
 	{
 		len = ft_strlen(conv->output);
-		if (len > conv->precision)
+		if ((conv->type == 'd' || conv->type == 'i') && ft_isneg((int)conv->input))
+			len--;
+		if (len > conv->precision && conv->type != 'd' && conv->type != 'i')
 		{
 			temp = ft_substr(conv->output, 0, conv->precision);
 			if (!temp)
@@ -73,8 +75,15 @@ static int	handle_precision(t_conv *conv)
 			temp = ft_calloc(conv->precision + 1, sizeof(char));
 			if (!temp)
 				return (-1);
-			ft_memset(temp, '0', conv->precision - len);
-			ft_strlcpy(temp + conv->precision - len, conv->output, len + 1);
+			ft_memset(temp, '0', conv->precision);
+			if (conv->output[0] == '-')
+			{
+				temp[0] = '-';
+				conv->output[0] = '0';
+				ft_strlcpy(temp + conv->precision - len, conv->output, len + 2);
+			}
+			else
+				ft_strlcpy(temp + conv->precision - len, conv->output, len + 1);
 			free(conv->output);
 			conv->output = temp;
 		}
