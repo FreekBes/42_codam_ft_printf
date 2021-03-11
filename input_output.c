@@ -6,12 +6,11 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:44:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 02:04:14 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 02:30:11 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "stdio.h"
 
 static void	debug_print_conv(t_conv *conv)
 {
@@ -62,7 +61,7 @@ static int	handle_precision(t_conv *conv)
 		len = ft_strlen(conv->output);
 		if ((conv->type == 'd' || conv->type == 'i') && ft_isneg((int)conv->input))
 			len--;
-		if (len > conv->precision && ((conv->type != 'd' && conv->type != 'i') || conv->output[0] == '0'))
+		if (len > conv->precision && (conv->type == 's' || conv->output[0] == '0'))
 		{
 			temp = ft_substr(conv->output, 0, conv->precision);
 			if (!temp)
@@ -70,7 +69,7 @@ static int	handle_precision(t_conv *conv)
 			free(conv->output);
 			conv->output = temp;
 		}
-		else if (len < conv->precision && (conv->type == 'd' || conv->type == 'i'))
+		else if (len < conv->precision && (conv->type == 'd' || conv->type == 'i' || conv->type == 'u'))
 		{
 			temp = ft_calloc(conv->precision + 1, sizeof(char));
 			if (!temp)
@@ -100,9 +99,9 @@ static int	input_to_output(t_conv *conv)
 	else if (conv->type == 'u')
 		conv->output = ft_itoa_base((unsigned int)conv->input, "0123456789");
 	else if (conv->type == 'X')
-		conv->output = ft_itoa_base((int)conv->input, "0123456789ABCDEF");
+		conv->output = ft_itoa_base((unsigned int)conv->input, "0123456789ABCDEF");
 	else if (conv->type == 'x')
-		conv->output = ft_itoa_base((int)conv->input, "0123456789abcdef");
+		conv->output = ft_itoa_base((unsigned int)conv->input, "0123456789abcdef");
 	else if (conv->type == 'p')
 		conv->output = ft_ptoa((intptr_t)conv->input);
 	else

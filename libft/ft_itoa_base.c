@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/11 00:08:06 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 00:22:29 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 02:37:50 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static void	nbr_loop(char *ret, unsigned int n, char *base, int base_num)
 {
 	if (n != 0)
 	{
-		nbr_loop(ret + 1, n / base_num, base, base_num);
-		ret = &base[n % base_num];
+		nbr_loop(ret - 1, n / base_num, base, base_num);
+		*ret = base[n % base_num];
 	}
 }
 
@@ -49,15 +49,18 @@ char	*ft_itoa_base(unsigned int n, char *base)
 {
 	int		base_num;
 	char	*ret;
+	int		num_len;
 
 	base_num = ft_strlen(base);
 	if (!is_valid_base(base))
 		return (0);
-	ret = ft_calloc(ft_numlen(n, base_num) + 1, sizeof(char));
+	num_len = ft_numlen(n, base_num);
+	ret = ft_calloc(num_len + 1, sizeof(char));
 	if (!ret)
 		return (NULL);
 	if (n == 0)
 		ret[0] = base[0];
-	nbr_loop(ret, n, base, base_num);
+	else
+		nbr_loop(ret + num_len - 1, n, base, base_num);
 	return (ret);
 }

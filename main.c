@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/25 17:51:53 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 01:52:22 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 02:32:00 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	main(void)
 
 	testing = 9999;
 	pointer = &testing;
-	ret = printf("   printf: \"this %.2i number\"\n", -2372);
-	ft_ret = ft_printf("ft_printf: \"this %.2i number\"\n", -2372);
+	ret = printf("   printf: \"%x\"\n", 52625);
+	ft_ret = ft_printf("ft_printf: \"%x\"\n", 52625);
 	//ret = printf("   printf: \"%*.*s, %*.*s\"\n", 5, 5, "a", "b");
 	//ft_ret = ft_printf("ft_printf: \"%*.*s, %*.*s\"\n", 5, 5, "a", "b");
 	//ret = printf("   printf: \"%i, %-11.6srew, %%, %-3q, %b, %11rew\"\n", -123, "test");
