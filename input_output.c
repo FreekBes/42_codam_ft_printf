@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:44:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 02:30:11 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 03:23:23 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	handle_precision(t_conv *conv)
 		len = ft_strlen(conv->output);
 		if ((conv->type == 'd' || conv->type == 'i') && ft_isneg((int)conv->input))
 			len--;
-		if (len > conv->precision && (conv->type == 's' || conv->output[0] == '0'))
+		if (len > conv->precision && (conv->type == 's' || (ft_strchr("diuxXp", conv->type) && conv->output[0] == '0')))
 		{
 			temp = ft_substr(conv->output, 0, conv->precision);
 			if (!temp)
@@ -69,7 +69,7 @@ static int	handle_precision(t_conv *conv)
 			free(conv->output);
 			conv->output = temp;
 		}
-		else if (len < conv->precision && (conv->type == 'd' || conv->type == 'i' || conv->type == 'u'))
+		else if (len < conv->precision && ft_strchr("diuxXp", conv->type))
 		{
 			temp = ft_calloc(conv->precision + 1, sizeof(char));
 			if (!temp)
@@ -109,7 +109,10 @@ static int	input_to_output(t_conv *conv)
 		conv->output = ft_calloc(2, sizeof(char));
 		if (!conv->output)
 			return (-1);
-		conv->output[0] = conv->type;
+		if (conv->type != 'c')
+			conv->output[0] = conv->type;
+		else
+			conv->output[0] = (char)conv->input;
 	}
 	if (!conv->output)
 		return (-1);
@@ -123,10 +126,14 @@ static int	write_output(t_conv *conv)
 
 	ret = 0;
 	len = ft_strlen(conv->output);
+	if (conv->type == 'p')
+		len += 2;
 	if (conv->prepend == '0' && conv->output[0] == '-')
 		ret += ft_putchar_fd('-', 1);
 	if (conv->alignment > 0 && len < conv->width)
 		ret += write_empty(conv->prepend, conv->width - len);
+	if (conv->type == 'p')
+		ret += ft_putstr_fd("0x", 1);
 	if (conv->prepend == '0' && conv->output[0] == '-')
 		ret += ft_putstr_fd(conv->output + 1, 1);
 	else

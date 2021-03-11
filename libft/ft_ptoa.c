@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/11 00:19:48 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 02:33:22 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/11 03:14:00 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,11 @@ char	*ft_ptoa(intptr_t ptr)
 	int		num_len;
 
 	num_len = ft_numlen(ptr, 16);
-	ret = ft_calloc(num_len + 3, sizeof(char));
+	ret = ft_calloc(num_len + 1, sizeof(char));
 	if (!ret)
 		return (NULL);
-	ft_memcpy(ret, "0x", 2);
 	if (ptr == 0)
-		ret[2] = '0';
+		ret[0] = '0';
 	else
 		ptr_loop(ret + num_len - 1, ptr);
 	return (ret);
