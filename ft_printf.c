@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:10:16 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/17 15:55:21 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/17 16:08:16 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_printf(const char *format, ...)
 	{
 		ret += ((t_conv *)conv_li->content)->position - start;
 		write(1, start, ((t_conv *)conv_li->content)->position - start);
-		ret += handle_conv((t_conv *)conv_li->content);
+		ret += write_conv((t_conv *)conv_li->content);
 		start = ((t_conv *)conv_li->content)->end;
 		conv_li = conv_li->next;
 	}

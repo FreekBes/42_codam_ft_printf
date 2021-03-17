@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   input_output.c                                     :+:    :+:            */
+/*   writer.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:44:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/17 16:01:42 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/17 16:08:06 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,53 +51,6 @@ static int	write_empty(char c, int length)
 		i--;
 	}
 	return (length);
-}
-
-static int	add_zeroes_precision(t_conv **conv, int len)
-{
-	char	*temp;
-
-	temp = ft_calloc((*conv)->precision + 1, sizeof(char));
-	if (!temp)
-		return (-1);
-	ft_memset(temp, '0', (*conv)->precision);
-	if ((*conv)->output[0] == '-')
-	{
-		temp[0] = '-';
-		(*conv)->output[0] = '0';
-		ft_strlcpy(temp + (*conv)->precision - len, (*conv)->output, len + 2);
-	}
-	else
-		ft_strlcpy(temp + (*conv)->precision - len, (*conv)->output, len + 1);
-	free((*conv)->output);
-	(*conv)->output = temp;
-	return (1);
-}
-
-static int	handle_precision(t_conv *conv)
-{
-	char	*temp;
-	int		len;
-
-	if (conv->precision > -1)
-	{
-		len = ft_strlen(conv->output);
-		if ((conv->type == 'd' || conv->type == 'i')
-			&& ft_isneg((int)conv->input))
-			len--;
-		if (len > conv->precision && (conv->type == 's'
-				|| (ft_strchr("diuxXp", conv->type) && conv->output[0] == '0')))
-		{
-			temp = ft_substr(conv->output, 0, conv->precision);
-			if (!temp)
-				return (-1);
-			free(conv->output);
-			conv->output = temp;
-		}
-		else if (len < conv->precision && ft_strchr("diuxXp", conv->type))
-			return (add_zeroes_precision(&conv, len));
-	}
-	return (1);
 }
 
 static int	input_to_output(t_conv *conv)
@@ -157,7 +110,7 @@ static int	write_output(t_conv *conv)
 	return (ret);
 }
 
-int	handle_conv(t_conv *conv)
+int	write_conv(t_conv *conv)
 {
 	//debug_print_conv(conv);
 	if (input_to_output(conv))
