@@ -6,13 +6,13 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/11 00:19:48 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 03:14:00 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/17 15:20:43 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void ptr_loop(char *ret, intptr_t ptr)
+static void	ptr_loop(char *ret, intptr_t ptr)
 {
 	static char	base[] = "0123456789abcdef";
 
