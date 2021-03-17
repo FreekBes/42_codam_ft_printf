@@ -6,12 +6,13 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:44:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/17 15:28:21 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/17 15:31:21 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+/*
 static void	debug_print_conv(t_conv *conv)
 {
 	ft_putstr_fd("\n\nCONVERSION STRUCT DEBUGGING CONTENTS\ninput:", 1);
@@ -37,6 +38,7 @@ static void	debug_print_conv(t_conv *conv)
 		ft_putstr_fd("NULL", 1);
 	ft_putstr_fd("\"\n\n\n", 1);
 }
+*/
 
 static int	write_empty(char c, int length)
 {

@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:15:37 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/17 15:24:43 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/17 15:47:33 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,35 @@ void	del_conv(void *conv)
 	free(conv);
 }
 
+static void	parse_conv_width(va_list **params, t_conv **conv, const char **c)
+{
+	while (ft_strchr(VALID_FIELDS, (int)**c))
+	{
+		if (**c == '-')
+			(*conv)->alignment = -1;
+		else if (**c == '0' && (ft_strchr("diuxX", (*conv)->type)
+				|| (*conv)->alignment > 0))
+			(*conv)->prepend = '0';
+		(*c)++;
+	}
+	if (**c == '*')
+	{
+		(*conv)->width = va_arg(**params, int);
+		if ((*conv)->width < 0)
+		{
+			(*conv)->alignment = -1;
+			(*conv)->width *= -1;
+			(*conv)->prepend = ' ';
+		}
+		(*c)++;
+	}
+	else if (ft_isdigit((int)**c))
+	{
+		(*conv)->width = ft_atoi(*c);
+		*c += ft_numlen((*conv)->width, 10);
+	}
+}
+
 static int	parse_conv(va_list *params, t_list **convs, const char **s)
 {
 	static char	empty[] = "(null)";
@@ -53,31 +82,7 @@ static int	parse_conv(va_list *params, t_list **convs, const char **s)
 	conv = new_conv(*s, (char)*type, type - *s + 1);
 	if (conv)
 	{
-		while (ft_strchr(VALID_FIELDS, (int)*c))
-		{
-			if (*c == '-')
-				conv->alignment = -1;
-			else if (*c == '0' && (ft_strchr("diuxX", *type)
-					|| conv->alignment > 0))
-				conv->prepend = '0';
-			c++;
-		}
-		if (*c == '*')
-		{
-			conv->width = va_arg(*params, int);
-			if (conv->width < 0)
-			{
-				conv->alignment = -1;
-				conv->width *= -1;
-				conv->prepend = ' ';
-			}
-			c++;
-		}
-		else if (ft_isdigit((int)*c))
-		{
-			conv->width = ft_atoi(c);
-			c += ft_numlen(conv->width, 10);
-		}
+		parse_conv_width(&params, &conv, &c);
 		if (*c == '.')
 		{
 			c++;
