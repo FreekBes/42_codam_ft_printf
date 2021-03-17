@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:15:37 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/17 15:47:33 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/17 15:51:39 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,19 @@ static void	parse_conv_width(va_list **params, t_conv **conv, const char **c)
 	}
 }
 
+static void	parse_conv_prec(va_list **params, t_conv **conv, const char **c)
+{
+	if (**c == '.')
+	{
+		(*c)++;
+		if (**c == '*')
+			(*conv)->precision = va_arg(**params, int);
+		else
+			(*conv)->precision = ft_atoi(*c);
+		(*conv)->prepend = ' ';
+	}
+}
+
 static int	parse_conv(va_list *params, t_list **convs, const char **s)
 {
 	static char	empty[] = "(null)";
@@ -83,15 +96,7 @@ static int	parse_conv(va_list *params, t_list **convs, const char **s)
 	if (conv)
 	{
 		parse_conv_width(&params, &conv, &c);
-		if (*c == '.')
-		{
-			c++;
-			if (*c == '*')
-				conv->precision = va_arg(*params, int);
-			else
-				conv->precision = ft_atoi(c);
-			conv->prepend = ' ';
-		}
+		parse_conv_prec(&params, &conv, &c);
 		if (ft_strchr(VALID_CONVERSIONS, (int)conv->type))
 			conv->input = va_arg(*params, void *);
 		if (!conv->input && conv->type == 's')

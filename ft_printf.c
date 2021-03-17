@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:10:16 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 01:31:40 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/17 15:55:21 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ int	ft_printf(const char *format, ...)
 
 	va_start(params, format);
 	conversions = parse_convs(&params, format);
+	va_end(params);
 	if (!conversions)
-	{
-		va_end(params);
 		return (-1);
-	}
 	conv_li = conversions;
 	start = format;
 	ret = 0;
@@ -40,6 +38,5 @@ int	ft_printf(const char *format, ...)
 	}
 	ret += ft_putstr_fd((char *)start, 1);
 	ft_lstclear(&conversions, &del_conv);
-	va_end(params);
 	return (ret);
 }
