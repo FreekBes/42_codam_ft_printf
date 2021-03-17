@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:44:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/17 17:44:09 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/17 18:30:33 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,31 @@
 
 /*
 write_empty writes the character c to the output, int length times.
-It is not very efficient for larger lenghts (many calls to write).
-Might improve that later on by using malloc and ft_memset.
+It uses ft_calloc to make sure write gets only called once for bigger
+lengths. In case the memory allocation fails, it will loop write calls
+instead.
 */
 
 static int	write_empty(char c, int length)
 {
-	int	i;
+	char	*temp;
+	int		i;
 
-	i = length;
-	while (i > 0)
+	temp = ft_calloc(length + 1, sizeof(char));
+	if (temp)
 	{
-		write(1, &c, 1);
-		i--;
+		ft_memset(temp, c, length);
+		ft_putstr_fd(temp, 1);
+		free(temp);
+	}
+	else
+	{
+		i = length;
+		while (i > 0)
+		{
+			write(1, &c, 1);
+			i--;
+		}
 	}
 	return (length);
 }
