@@ -6,11 +6,23 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:10:16 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/17 16:30:52 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/17 18:24:31 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+/*
+handle_convs handles all conversions in the linked list *conversions
+and returns the amount of characters printed, or -1 on error.
+
+It loops through the linked list, until either conv_li == NULL or
+the conversion type is '\0', printing all characters in the format
+string in between the conversions in the linked list, then writing the
+conversions themselves, while keeping track of the amount of characters
+printed. The pointer *start keeps track of the start of the in-betweens.
+After the loop, the remaining characters in the format string get printed.
+*/
 
 static int	handle_convs(const char *start, t_list *conversions)
 {
