@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:15:37 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 03:38:09 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/17 15:24:43 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,17 @@ static int	parse_conv(va_list *params, t_list **convs, const char **s)
 
 	c = *s + 1;
 	type = c;
-	while (ft_strchr(VALID_FIELDS_DIG, (int)* type) && (int)*type != '\0')
+	while (ft_strchr(VALID_FIELDS_DIG, (int)*type) && (int)*type != '\0')
 		type++;
-	conv = new_conv(*s, (char)* type, type - *s + 1);
+	conv = new_conv(*s, (char)*type, type - *s + 1);
 	if (conv)
 	{
-		while (ft_strchr(VALID_FIELDS, (int)* c))
+		while (ft_strchr(VALID_FIELDS, (int)*c))
 		{
 			if (*c == '-')
 				conv->alignment = -1;
-			else if (*c == '0' && (ft_strchr("diuxX", *type) || conv->alignment > 0))
+			else if (*c == '0' && (ft_strchr("diuxX", *type)
+					|| conv->alignment > 0))
 				conv->prepend = '0';
 			c++;
 		}

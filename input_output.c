@@ -6,7 +6,7 @@
 /*   By: fbes <fbes@student.codam.nl>                 +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/10 22:44:54 by fbes          #+#    #+#                 */
-/*   Updated: 2021/03/11 03:56:09 by fbes          ########   odam.nl         */
+/*   Updated: 2021/03/17 15:28:21 by fbes          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,11 @@ static int	handle_precision(t_conv *conv)
 	if (conv->precision > -1)
 	{
 		len = ft_strlen(conv->output);
-		if ((conv->type == 'd' || conv->type == 'i') && ft_isneg((int)conv->input))
+		if ((conv->type == 'd' || conv->type == 'i')
+			&& ft_isneg((int)conv->input))
 			len--;
-		if (len > conv->precision && (conv->type == 's' || (ft_strchr("diuxXp", conv->type) && conv->output[0] == '0')))
+		if (len > conv->precision && (conv->type == 's'
+				|| (ft_strchr("diuxXp", conv->type) && conv->output[0] == '0')))
 		{
 			temp = ft_substr(conv->output, 0, conv->precision);
 			if (!temp)
@@ -97,11 +99,11 @@ static int	input_to_output(t_conv *conv)
 	else if (conv->type == 'd' || conv->type == 'i')
 		conv->output = ft_itoa((int)conv->input);
 	else if (conv->type == 'u')
-		conv->output = ft_itoa_base((unsigned int)conv->input, "0123456789");
+		conv->output = ft_itoa_base((unsigned int)conv->input, DECIMAL);
 	else if (conv->type == 'X')
-		conv->output = ft_itoa_base((unsigned int)conv->input, "0123456789ABCDEF");
+		conv->output = ft_itoa_base((unsigned int)conv->input, HEX_UP);
 	else if (conv->type == 'x')
-		conv->output = ft_itoa_base((unsigned int)conv->input, "0123456789abcdef");
+		conv->output = ft_itoa_base((unsigned int)conv->input, HEX_DOWN);
 	else if (conv->type == 'p')
 		conv->output = ft_ptoa((intptr_t)conv->input);
 	else
