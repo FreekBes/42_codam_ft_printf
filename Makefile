@@ -6,7 +6,7 @@
 #    By: fbes <fbes@student.codam.nl>                 +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/11/25 17:36:28 by fbes          #+#    #+#                  #
-#    Updated: 2021/03/10 23:11:57 by fbes          ########   odam.nl          #
+#    Updated: 2021/03/17 15:30:55 by fbes          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRCS =		ft_printf.c conversions.c input_output.c
 
 OBJS =		$(SRCS:.c=.o)
 
-CFLAGS =
+CFLAGS =	-Wall -Wextra -Werror
 
 all: $(NAME)
 
